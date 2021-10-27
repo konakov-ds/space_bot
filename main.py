@@ -1,8 +1,15 @@
 import requests
 import os
+from dotenv import load_dotenv
 
 from urllib.parse import urlsplit, unquote
+import telegram
+from telegram import Update
+from telegram.ext import CommandHandler, ConversationHandler,\
+    Filters, MessageHandler
 
+load_dotenv()
+token = os.getenv('TELEGRAM_TOKEN')
 
 dir_path = 'images/'
 os.makedirs(dir_path, exist_ok=True)
@@ -92,5 +99,18 @@ def get_nasa_epic_images(url, date):
         load_img(link, name)
 
 
+def handle():
+    #updater = Updater(token, use_context=True)
+    # dispatcher = updater.dispatcher
+    #
+    # dispatcher.addhandler()
+    #
+    # updater.start_polling()
+    # updater.idle()
+    bot = telegram.Bot(token=token)
+    bot.send_message(chat_id='@space_inspire', text='hello')
+
+
 if __name__ == '__main__':
-    get_nasa_epic_images('2020-10-25')
+    #get_nasa_epic_images('2020-10-25')
+    handle()
