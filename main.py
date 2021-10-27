@@ -109,6 +109,7 @@ def handle():
     # updater.idle()
     bot = telegram.Bot(token=token)
     bot.send_message(chat_id='@space_inspire', text='hello')
+    bot.send_photo(chat_id='@space_inspire', photo=open('images/hubble.jpeg', 'rb'))
 
 
 if __name__ == '__main__':
