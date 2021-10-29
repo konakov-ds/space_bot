@@ -1,12 +1,16 @@
 import os
+from urllib.parse import urlsplit, unquote
 
 import requests
-
-dir_path = 'images/'
-os.makedirs(dir_path, exist_ok=True)
+from dotenv import load_dotenv
 
 
-def load_img(url, name):
+load_dotenv()
+nasa_api = os.getenv('NASA_API')
+
+
+def load_img(url, name, dir_path='images'):
+    os.makedirs(dir_path, exist_ok=True)
     img_path = os.path.join(dir_path, name)
 
     response = requests.get(url)
@@ -18,12 +22,11 @@ def load_img(url, name):
 
 def get_spacex_img_links():
     spacex_api = 'https://api.spacexdata.com/v3/launches/'
-    # params = {
-    #     'launch_year': 2021
-    # }
+
     response = requests.get(spacex_api)
     response.raise_for_status()
     response_list = response.json()
+
     links = [
         doc['links']['flickr_images'] for doc in response_list if len(doc['links']['flickr_images']) > 0
     ]
@@ -51,7 +54,7 @@ def get_url_extension(url):
 def get_apod_links(links_count):
     api_apod = 'https://api.nasa.gov/planetary/apod'
     params = {
-        'api_key': 'TzRclLIAzTV0pLMYpY1XARqbGOeYA5cRHt93lmSw',
+        'api_key': nasa_api,
         'count': links_count,
     }
     response = requests.get(api_apod, params)
@@ -71,7 +74,7 @@ def get_nasa_apod_images(count):
 def get_nasa_epic_links(url, date):
     nasa_epic = 'https://epic.gsfc.nasa.gov/epic-archive/jpg/'
     params = {
-        'api_key': 'TzRclLIAzTV0pLMYpY1XARqbGOeYA5cRHt93lmSw',
+        'api_key': nasa_api,
         'date': date,
     }
     response = requests.get(url, params)
@@ -88,3 +91,6 @@ def get_nasa_epic_images(url, date):
         ext = get_url_extension(link)
         name = f'nasa_epic_{i}.{ext}'
         load_img(link, name)
+
+
+if '__name__' == '__main__':
