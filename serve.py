@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 nasa_api = os.getenv('NASA_API')
+apod_count = os.getenv('APOD_COUNT')
+epic_date = os.getenv('EPIC_DATE')
 
 
 def load_img(url, name, dir_path='images'):
@@ -34,9 +36,11 @@ def get_spacex_img_links():
     return links_flat
 
 
-def fetch_spacex_last_launch(links):
+def fetch_spacex_launch():
+    links = get_spacex_img_links()
     for i, link in enumerate(links):
-        name = f'spacex_{i}.jpg'
+        ext = get_url_extension(link)
+        name = f'spacex_{i}.{ext}'
         load_img(link, name)
 
 
@@ -52,7 +56,7 @@ def get_url_extension(url):
 
 
 def get_apod_links(links_count):
-    api_apod = 'https://api.nasa.gov/planetary/apod'
+    api_apod = 'https://api.nasa.gov/planetary/apod/'
     params = {
         'api_key': nasa_api,
         'count': links_count,
@@ -71,10 +75,10 @@ def get_nasa_apod_images(count):
         load_img(link, name)
 
 
-def get_nasa_epic_links(url, date):
+def get_nasa_epic_links(date):
+    url = 'https://epic.gsfc.nasa.gov/api/natural'
     nasa_epic = 'https://epic.gsfc.nasa.gov/epic-archive/jpg/'
     params = {
-        'api_key': nasa_api,
         'date': date,
     }
     response = requests.get(url, params)
@@ -85,12 +89,15 @@ def get_nasa_epic_links(url, date):
     return links
 
 
-def get_nasa_epic_images(url, date):
-    links = get_nasa_epic_links(url, date)
+def get_nasa_epic_images(date):
+    links = get_nasa_epic_links(date)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'nasa_epic_{i}.{ext}'
         load_img(link, name)
 
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
+    fetch_spacex_launch()
+    get_nasa_apod_images(apod_count)
+    get_nasa_epic_images(epic_date)
