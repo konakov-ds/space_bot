@@ -16,7 +16,7 @@ def send_photo_to_channel(delay, channel=channel):
     bot = telegram.Bot(token=token)
     images = os.listdir('images/')
     while True:
-        for i, image in enumerate(images):
+        for image in images:
             img_path = os.path.join(img_dir, image)
             with open(img_path, 'rb') as p:
                 photo = p.read()
