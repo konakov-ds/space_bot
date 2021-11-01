@@ -5,12 +5,6 @@ import requests
 from dotenv import load_dotenv
 
 
-load_dotenv()
-nasa_api = os.getenv('NASA_API')
-apod_count = os.getenv('APOD_COUNT')
-epic_date = os.getenv('EPIC_DATE')
-
-
 def load_img(url, name, dir_path='images'):
     os.makedirs(dir_path, exist_ok=True)
     img_path = os.path.join(dir_path, name)
@@ -98,6 +92,11 @@ def get_nasa_epic_images(date):
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    nasa_api = os.getenv('NASA_API')
+    apod_count = os.getenv('APOD_COUNT')
+    epic_date = os.getenv('EPIC_DATE')
+
     fetch_spacex_launch()
     get_nasa_apod_images(apod_count)
     get_nasa_epic_images(epic_date)
