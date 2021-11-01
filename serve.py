@@ -5,8 +5,8 @@ import requests
 from dotenv import load_dotenv
 
 
-def load_img(url, name, dir_path='images'):
-    os.makedirs(dir_path, exist_ok=True)
+def load_img(url, name, dir_path):
+
     img_path = os.path.join(dir_path, name)
 
     response = requests.get(url)
@@ -30,12 +30,12 @@ def get_spacex_img_links():
     return links_flat
 
 
-def fetch_spacex_launch():
+def fetch_spacex_launch(dir_path):
     links = get_spacex_img_links()
     for i, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'spacex_{i}.{ext}'
-        load_img(link, name)
+        load_img(link, name, dir_path)
 
 
 def get_url_extension(url):
@@ -61,12 +61,12 @@ def get_apod_links(links_count, nasa_api):
     return links
 
 
-def get_nasa_apod_images(count, api):
+def get_nasa_apod_images(count, api, dir_path):
     links = get_apod_links(count, api)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'nasa_apod_{i}.{ext}'
-        load_img(link, name)
+        load_img(link, name, dir_path)
 
 
 def get_nasa_epic_links(date):
@@ -83,18 +83,19 @@ def get_nasa_epic_links(date):
     return links
 
 
-def get_nasa_epic_images(date):
+def get_nasa_epic_images(date, dir_path):
     links = get_nasa_epic_links(date)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'nasa_epic_{i}.{ext}'
-        load_img(link, name)
+        load_img(link, name, dir_path)
 
 
-def main():
-    fetch_spacex_launch()
-    get_nasa_apod_images(apod_count, nasa_api)
-    get_nasa_epic_images(epic_date)
+def main(dir_path='images'):
+    os.makedirs(dir_path, exist_ok=True)
+    fetch_spacex_launch(dir_path)
+    get_nasa_apod_images(apod_count, nasa_api, dir_path)
+    get_nasa_epic_images(epic_date, dir_path)
 
 
 if __name__ == '__main__':
