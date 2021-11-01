@@ -5,7 +5,7 @@ import telegram
 from dotenv import load_dotenv
 
 
-def send_photo_to_channel(delay, channel):
+def send_photo_to_channel(delay, channel, token):
     bot = telegram.Bot(token=token)
     images = os.listdir('images/')
     while True:
@@ -25,6 +25,5 @@ if __name__ == '__main__':
     token = os.getenv('TELEGRAM_TOKEN')
     delay = float(os.getenv('TIME_DELAY'))
     channel = os.getenv('TG_CHANNEL')
-    img_dir = 'images'
 
-    send_photo_to_channel(delay)
+    send_photo_to_channel(delay, channel, token)
