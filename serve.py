@@ -91,12 +91,16 @@ def get_nasa_epic_images(date):
         load_img(link, name)
 
 
+def main():
+    fetch_spacex_launch()
+    get_nasa_apod_images(apod_count)
+    get_nasa_epic_images(epic_date)
+
+
 if __name__ == '__main__':
     load_dotenv()
     nasa_api = os.getenv('NASA_API')
     apod_count = os.getenv('APOD_COUNT')
     epic_date = os.getenv('EPIC_DATE')
 
-    fetch_spacex_launch()
-    get_nasa_apod_images(apod_count)
-    get_nasa_epic_images(epic_date)
+    main()
