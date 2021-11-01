@@ -40,13 +40,9 @@ def fetch_spacex_launch(dir_path):
 
 def get_url_extension(url):
     url_split = urlsplit(url)
-    path = [unquote(i) for i in url_split if '.' in i]
-    extension = [os.path.split(p)[1] for p in path]
-    extension = [
-        ext.split('.')[1] for ext in extension
-        if any([_ in ext for _ in ['txt', 'jpeg', 'png', 'gif', 'jpg']])
-    ]
-    return extension[0]
+    path = unquote(url_split.path)
+    extension = os.path.splitext(path)[1]
+    return extension
 
 
 def get_apod_links(links_count, nasa_api):
@@ -57,7 +53,7 @@ def get_apod_links(links_count, nasa_api):
     }
     response = requests.get(api_apod, params)
     response.raise_for_status()
-    links = [res['url'] for res in response.json()]
+    links = [res.get('url') for res in response.json()]
     return links
 
 
@@ -65,7 +61,7 @@ def get_nasa_apod_images(count, api, dir_path):
     links = get_apod_links(count, api)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
-        name = f'nasa_apod_{i}.{ext}'
+        name = f'nasa_apod_{i}{ext}'
         load_img(link, name, dir_path)
 
 
@@ -87,7 +83,7 @@ def get_nasa_epic_images(date, dir_path):
     links = get_nasa_epic_links(date)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
-        name = f'nasa_epic_{i}.{ext}'
+        name = f'nasa_epic_{i}{ext}'
         load_img(link, name, dir_path)
 
 
