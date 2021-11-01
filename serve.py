@@ -49,7 +49,7 @@ def get_url_extension(url):
     return extension[0]
 
 
-def get_apod_links(links_count):
+def get_apod_links(links_count, nasa_api):
     api_apod = 'https://api.nasa.gov/planetary/apod/'
     params = {
         'api_key': nasa_api,
@@ -61,8 +61,8 @@ def get_apod_links(links_count):
     return links
 
 
-def get_nasa_apod_images(count):
-    links = get_apod_links(count)
+def get_nasa_apod_images(count, api):
+    links = get_apod_links(count, api)
     for i, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'nasa_apod_{i}.{ext}'
@@ -93,7 +93,7 @@ def get_nasa_epic_images(date):
 
 def main():
     fetch_spacex_launch()
-    get_nasa_apod_images(apod_count)
+    get_nasa_apod_images(apod_count, nasa_api)
     get_nasa_epic_images(epic_date)
 
 
