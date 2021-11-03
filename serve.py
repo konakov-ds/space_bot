@@ -30,7 +30,7 @@ def get_spacex_img_links():
     return img_links
 
 
-def fetch_spacex_launch(dir_path):
+def fetch_spacex_launch_images(dir_path):
     links = get_spacex_img_links()
     for img_num, link in enumerate(links):
         ext = get_url_extension(link)
@@ -57,7 +57,7 @@ def get_apod_links(links_count, nasa_api):
     return links
 
 
-def get_nasa_apod_images(count, api, dir_path):
+def fetch_nasa_apod_images(count, api, dir_path):
     links = get_apod_links(count, api)
     for img_num, link in enumerate(links):
         ext = get_url_extension(link)
@@ -79,7 +79,7 @@ def get_nasa_epic_links(date):
     return links
 
 
-def get_nasa_epic_images(date, dir_path):
+def fetch_nasa_epic_images(date, dir_path):
     links = get_nasa_epic_links(date)
     for img_num, link in enumerate(links):
         ext = get_url_extension(link)
@@ -95,6 +95,6 @@ if __name__ == '__main__':
     dir_path = 'images'
 
     os.makedirs(dir_path, exist_ok=True)
-    fetch_spacex_launch(dir_path)
-    get_nasa_apod_images(apod_count, nasa_api_token, dir_path)
-    get_nasa_epic_images(epic_date, dir_path)
+    fetch_spacex_launch_images(dir_path)
+    fetch_nasa_apod_images(apod_count, nasa_api_token, dir_path)
+    fetch_nasa_epic_images(epic_date, dir_path)
