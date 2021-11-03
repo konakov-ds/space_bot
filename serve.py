@@ -87,17 +87,14 @@ def get_nasa_epic_images(date, dir_path):
         load_img(link, name, dir_path)
 
 
-def main(dir_path='images'):
-    os.makedirs(dir_path, exist_ok=True)
-    fetch_spacex_launch(dir_path)
-    get_nasa_apod_images(apod_count, nasa_api, dir_path)
-    get_nasa_epic_images(epic_date, dir_path)
-
-
 if __name__ == '__main__':
     load_dotenv()
     nasa_api = os.getenv('NASA_API')
     apod_count = os.getenv('APOD_COUNT')
     epic_date = os.getenv('EPIC_DATE')
+    dir_path = 'images'
 
-    main()
+    os.makedirs(dir_path, exist_ok=True)
+    fetch_spacex_launch(dir_path)
+    get_nasa_apod_images(apod_count, nasa_api, dir_path)
+    get_nasa_epic_images(epic_date, dir_path)
