@@ -26,8 +26,8 @@ def get_spacex_img_links():
     links = [
         doc['links']['flickr_images'] for doc in response if doc['links']['flickr_images']
     ]
-    links_flat = [link for sub in links for link in sub]
-    return links_flat
+    img_links = [link for sub in links for link in sub]
+    return img_links
 
 
 def fetch_spacex_launch(dir_path):
