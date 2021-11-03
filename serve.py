@@ -32,9 +32,9 @@ def get_spacex_img_links():
 
 def fetch_spacex_launch(dir_path):
     links = get_spacex_img_links()
-    for i, link in enumerate(links):
+    for img_num, link in enumerate(links):
         ext = get_url_extension(link)
-        name = f'spacex_{i}.{ext}'
+        name = f'spacex_{img_num}.{ext}'
         load_img(link, name, dir_path)
 
 
@@ -59,9 +59,9 @@ def get_apod_links(links_count, nasa_api):
 
 def get_nasa_apod_images(count, api, dir_path):
     links = get_apod_links(count, api)
-    for i, link in enumerate(links):
+    for img_num, link in enumerate(links):
         ext = get_url_extension(link)
-        name = f'nasa_apod_{i}{ext}'
+        name = f'nasa_apod_{img_num}{ext}'
         load_img(link, name, dir_path)
 
 
@@ -81,20 +81,20 @@ def get_nasa_epic_links(date):
 
 def get_nasa_epic_images(date, dir_path):
     links = get_nasa_epic_links(date)
-    for i, link in enumerate(links):
+    for img_num, link in enumerate(links):
         ext = get_url_extension(link)
-        name = f'nasa_epic_{i}{ext}'
+        name = f'nasa_epic_{img_num}{ext}'
         load_img(link, name, dir_path)
 
 
 if __name__ == '__main__':
     load_dotenv()
-    nasa_api = os.getenv('NASA_API')
+    nasa_api_token = os.getenv('NASA_API')
     apod_count = os.getenv('APOD_COUNT')
     epic_date = os.getenv('EPIC_DATE')
     dir_path = 'images'
 
     os.makedirs(dir_path, exist_ok=True)
     fetch_spacex_launch(dir_path)
-    get_nasa_apod_images(apod_count, nasa_api, dir_path)
+    get_nasa_apod_images(apod_count, nasa_api_token, dir_path)
     get_nasa_epic_images(epic_date, dir_path)

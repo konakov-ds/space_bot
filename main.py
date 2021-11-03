@@ -11,10 +11,10 @@ def send_photo_to_channel(delay, channel, token, dir_path):
     while True:
         for image in images:
             img_path = os.path.join(dir_path, image)
-            with open(img_path, 'rb') as p:
+            with open(img_path, 'rb') as photo:
                 bot.send_photo(
                     chat_id=channel,
-                    photo=p
+                    photo=photo
                 )
             time.sleep(delay)
 
