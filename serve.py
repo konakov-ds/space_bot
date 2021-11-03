@@ -21,10 +21,10 @@ def get_spacex_img_links():
 
     response = requests.get(spacex_api)
     response.raise_for_status()
-    response_list = response.json()
+    response = response.json()
 
     links = [
-        doc['links']['flickr_images'] for doc in response_list if len(doc['links']['flickr_images']) > 0
+        doc['links']['flickr_images'] for doc in response if doc['links']['flickr_images']
     ]
     links_flat = [link for sub in links for link in sub]
     return links_flat
