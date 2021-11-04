@@ -45,10 +45,10 @@ def get_url_extension(url):
     return extension
 
 
-def get_apod_links(links_count, nasa_api):
+def get_apod_links(links_count, nasa_api_token):
     api_apod = 'https://api.nasa.gov/planetary/apod/'
     params = {
-        'api_key': nasa_api,
+        'api_key': nasa_api_token,
         'count': links_count,
     }
     response = requests.get(api_apod, params)
@@ -57,8 +57,8 @@ def get_apod_links(links_count, nasa_api):
     return links
 
 
-def fetch_nasa_apod_images(count, api, dir_path):
-    links = get_apod_links(count, api)
+def fetch_nasa_apod_images(count, nasa_api_token, dir_path):
+    links = get_apod_links(count, nasa_api_token)
     for img_num, link in enumerate(links):
         ext = get_url_extension(link)
         name = f'nasa_apod_{img_num}{ext}'
